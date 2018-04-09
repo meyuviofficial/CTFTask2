@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+p {
+  font-size: 25px;
+  font-family: "Roboto", sans-serif;
+  color:  red ;
+  text-align: center;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #3f60a3;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #5a87e2;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+
+body {
+  /* background: #76b852; */
+  background: -webkit-linear-gradient(right, #7195dd, #3f60a3);
+  /* background: linear-gradient(to left, #76b852, #8DC26F); */
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+    </style>
+  </head>
+  <script
+  src="jquery-3.3.1.min.js"></script>
+  <script>
+
+  $(document).ready(function() {
+
+    // process the form
+    $('form').submit(function(event) {
+
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        var formData = {
+            'username'              : $('input[name=username]').val(),
+            'password'             : $('input[name=password]').val(),
+        };
+        // process the form
+        $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : 'https://server.kirana-pyramid.tk/login', // the url where we want to POST
+            data        : JSON.stringify(formData), // our data object
+            dataType    : 'json', // what type of data do we expect back from the server
+            contentType: "application/json",
+                        crossDomain:true
+        })
+            // using the done promise callback
+            .done(function(data) {
+                // log data to the console so we can see
+                console.log(data);
+                var token = data.data.token;
+                localStorage.setItem("token",token);
+                // here we will handle errors and validation messages
+            });
+            window.location.href="http://localhost:8000/profile.html"
+        // stop the form from submitting the normal way and refreshing the page
+        event.preventDefault();
+    });
+
+//       $("#login-btn").on('click', function() {
+//         var username  = $("#username").val;
+//         var password = $("#password").val;
+//
+//         // validation
+//         //
+//         // var xhr = XmlHTTPRequest()
+//         //
+//         // xhr.onreadystatechange = function(response) {
+//         //     if(this.readyState == 4) {
+//         //         console.log(response)
+//         //     }
+//         //}
+//         var data = {
+//           "username" : username,
+//           "password" : password
+//         }
+//         // xhr.open("https://server.kirana-pyramid.tk", "POST", true)
+//         // xhr.send()
+//         console.log("here")
+//         //
+//         // $.post("http://server.kirana-pyramid.tk/login", data,function success(response)  {
+//         //     console.log(response)
+//         //   }
+//         // )
+//
+//         $.ajax({
+//   type: "POST",
+//   url: "http://server.kirana-pyramid.tk/login",
+//   data: data,
+//   success: function() { console.log("Done")}
+// });
+})
+  </script>
+  <body>
+    <div class="login-page">
+      <!-- <p>Login</p> -->
+  <div class="form">
+    <form class="login-form" >
+      <input name="username" type="text" placeholder="USERNAME"/>
+      <input name="password" type="password" placeholder="PASSWORD"/>
+      <button type="submit" id='login-btn'>login</button>
+    </form>
+  </div>
+</div>
+  </body>
+</html>

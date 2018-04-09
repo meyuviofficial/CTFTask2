@@ -1,0 +1,636 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Profile Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="jquery-3.3.1.min.js"></script>
+  <script>
+
+  function viewBill(url) {
+    var token = localStorage.getItem('token');
+
+    console.log(url);
+    // console.log("hiii");
+    //  console.log(token);
+    //
+    var url = url;
+    console.log(url);
+    Data={"token":token};
+    $.ajax({
+        type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        url         : url, // the url where we want to POST
+        data        : JSON.stringify(Data), // our data object
+        dataType    : 'json', // what type of data do we expect back from the server
+        contentType: "application/json",
+        crossDomain:true        // success: function(data) {
+        //   console.log("hii");
+
+      });
+  }
+
+  </script>
+  <script>
+
+
+
+  $(document).ready(function() {
+    var token = localStorage.getItem('token');
+
+        var formData = {"token" : token,"user_id" : 27};
+        $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : 'https://server.kirana-pyramid.tk/outflows', // the url where we want to POST
+            data        : JSON.stringify(formData), // our data object
+            dataType    : 'json', // what type of data do we expect back from the server
+            contentType: "application/json",
+            crossDomain:true,
+            success: function(data) {
+              var months = Object.keys(data.data);
+                // months.each()
+                  console.log(months);
+                // for(var month = 0;month<=11)
+                // var data_length = data.data.January.outflows.length;
+                // var pdata='';
+                // for(var i =0 ; i<data_length;i++)
+                // {
+                //   pdata+='<tr>';
+                //   pdata+='<td>'+data.data.January.outflows[i].amount+'</td>';
+                //   pdata+='<td>'+'<a href="data.data.January.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+                //   pdata+='<td>'+data.data.January.outflows[i].paid_for+'</td>';
+                //   pdata+='<td>'+data.data.January.outflows[i].dob+'</td>';
+                //   pdata+='<td>'+data.data.January.outflows[i].reason+'</td>';
+                //   pdata+='<td>'+data.data.January.outflows[i].upload_date+'</td>';
+                //   pdata+='</tr>';
+                // }
+                // $('#tableJanuary').append(pdata);
+                // //February Table
+                // var data_length = data.data.February.outflows.length;
+                // var pdata='';
+                // for(var i =0 ; i<data_length;i++)
+                // {
+                //   pdata+='<tr>';
+                //   pdata+='<td>'+data.data.February.outflows[i].amount+'</td>';
+                //   pdata+='<td>'+'<a href="data.data.February.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+                //   pdata+='<td>'+data.data.February.outflows[i].paid_for+'</td>';
+                //   pdata+='<td>'+data.data.February.outflows[i].dob+'</td>';
+                //   pdata+='<td>'+data.data.February.outflows[i].reason+'</td>';
+                //   pdata+='<td>'+data.data.February.outflows[i].upload_date+'</td>';
+                //   pdata+='</tr>';
+                // }
+                // $('#tableFebruary').append(pdata);
+                //March table
+                console.log("hi");
+              var data_length = data.data.March.outflows.length;
+              var pdata='';
+              var total_amt = data.data.March.earned;
+              var total_spent = data.data.March.spent;
+                $('#total_amt').append(total_amt);
+                $('#total_spent').append(total_spent);
+              for(var i =0 ; i<data_length;i++)
+              {
+                console.log(data.data.March.outflows[i].dob);
+                pdata+='<tr>';
+                pdata+='<td>'+data.data.March.outflows[i].amount+'</td>';
+                console.log(data.data.March.outflows[i].bill_url+'?'+'token'+'='+token);
+                var billurl = data.data.March.outflows[i].bill_url+'?'+'token'+'='+token;
+                console.log(billurl);
+                pdata+='<td>'+'<a href='+billurl+' onclick=viewBill(\"' + data.data.March.outflows[i].bill_url + '\") target="_blank">' +"view"+'</a>'+'</td>';
+                pdata+='<td>'+data.data.March.outflows[i].paid_for+'</td>';
+                pdata+='<td>'+data.data.March.outflows[i].dob+'</td>';
+                pdata+='<td>'+data.data.March.outflows[i].reason+'</td>';
+                pdata+='<td>'+data.data.March.outflows[i].upload_date+'</td>';
+                pdata+='</tr>';
+              }
+              $('#tableMarch').append(pdata);
+              // April Table
+              var data_length = data.data.April.outflows.length;
+              var pdata='';
+              var April_amt = data.data.April.earned;
+              var April_spent = data.data.April.spent;
+              console.log(April_spent);
+                $('#April_amt').append(April_amt);
+                $('#April_spent').append(April_spent);
+                var bill=[];
+              for(var i =0 ; i<data_length;i++)
+              {
+                pdata+='<tr>';
+                pdata+='<td>'+data.data.April.outflows[i].amount+'</td>';
+                // pdata+='<td>'+'<a onclick="viewBill(' + data.data.April.outflows[i].bill_url + ') >'+"view"+'</a>'+'</td>';
+                pdata+='<td>'+data.data.April.outflows[i].paid_for+'</td>';
+                pdata+='<td>'+data.data.April.outflows[i].dob+'</td>';
+                pdata+='<td>'+data.data.April.outflows[i].reason+'</td>';
+                pdata+='<td>'+data.data.April.outflows[i].upload_date+'</td>';
+                pdata+='</tr>';
+              }
+              $('#tableApril').append(pdata);
+            //   var data_length = data.data.May.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.May.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.May.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.May.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.May.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.May.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.May.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableMay').append(pdata);
+            //   var data_length = data.data.June.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.June.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.June.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.June.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.June.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.June.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.June.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableJune').append(pdata);
+            //   var data_length = data.data.July.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.July.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.July.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.July.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.July.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.July.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.July.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableJuly').append(pdata);
+            //   var Aug_length = data.data.August.outflows.length;
+            //   console.log(Aug_length);
+            //   var Augdata='';
+            //   var total_amt = data.data.August.earned;
+            //   var total_spent = data.data.August.spent;
+            //     $('#total_amt').append(total_amt);
+            //     $('#total_spent').append(total_spent);
+            //   for(var i =0 ; i<Aug_length;i++)
+            //   {
+            //     console.log(data.data.August.outflows[i].amount);
+            //     Augdata+='<tr>';
+            //     Augdata+='<td>'+data.data.August.outflows[i].amount+'</td>';
+            //     Augdata+='<td>'+'<a href="data.data.August.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     Augdata+='<td>'+data.data.August.outflows[i].paid_for+'</td>';
+            //     Augdata+='<td>'+data.data.August.outflows[i].dob+'</td>';
+            //     Augdata+='<td>'+data.data.August.outflows[i].reason+'</td>';
+            //     Augdata+='<td>'+data.data.August.outflows[i].upload_date+'</td>';
+            //     Augdata+='</tr>';
+            //   }
+            //    $('#tableAugust').append(Augdata);
+            //   var data_length = data.data.August.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.August.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.August.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.August.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.August.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.August.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.August.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableSeptember').append(pdata);
+            //   var data_length = data.data.October.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.October.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.October.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.October.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.October.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.October.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.October.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableOctober').append(pdata);var data_length = data.data.November.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.November.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.November.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.November.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.November.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.November.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.November.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableNovember').append(pdata);
+            //   var data_length = data.data.December.outflows.length;
+            //   var pdata='';
+            //   for(var i =0 ; i<data_length;i++)
+            //   {
+            //     pdata+='<tr>';
+            //     pdata+='<td>'+data.data.December.outflows[i].amount+'</td>';
+            //     pdata+='<td>'+'<a href="data.data.December.outflows[i].bill_url">'+"view"+'</a>'+'</td>';
+            //     pdata+='<td>'+data.data.December.outflows[i].paid_for+'</td>';
+            //     pdata+='<td>'+data.data.December.outflows[i].dob+'</td>';
+            //     pdata+='<td>'+data.data.December.outflows[i].reason+'</td>';
+            //     pdata+='<td>'+data.data.December.outflows[i].upload_date+'</td>';
+            //     pdata+='</tr>';
+            //   }
+            //   $('#tableDecember').append(pdata);
+            }
+          })
+            // }
+            // }
+        $(function() {
+          $('#January').click(function() {
+            $('div[id^=div]').hide();
+            $('#div1').show();
+          });
+          $('#February').click(function() {
+            $('div[id^=div]').hide();
+            $('#div2').show();
+          });
+          $('#March').click(function() {
+            $('div[id^=div]').hide();
+            $('#div3').show();
+          });
+          $('#April').click(function() {
+            $('div[id^=div]').hide();
+            $('#div4').show();
+          });
+          $('#May').click(function() {
+            $('div[id^=div]').hide();
+            $('#div5').show();
+          });
+
+          $('#June').click(function() {
+            $('div[id^=div]').hide();
+            $('#div6').show();
+          });
+
+          $('#July').click(function() {
+            $('div[id^=div]').hide();
+            $('#div7').show();
+          });
+          $('#August').click(function() {
+            $('div[id^=div]').hide();
+            $('#div8').show();
+          });
+
+          $('#September').click(function() {
+            $('div[id^=div]').hide();
+            $('#div9').show();
+          });
+
+          $('#October').click(function() {
+            $('div[id^=div]').hide();
+            $('#div10').show();
+          });
+
+          $('#November').click(function() {
+            $('div[id^=div]').hide();
+            $('#div11').show();
+          });
+
+          $('#December').click(function() {
+            $('div[id^=div]').hide();
+            $('#div12').show();
+          });
+        });
+
+      })
+    </script>
+    <style media="screen">
+    @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+body {
+background-color: #3e94ec;
+font-family: "Roboto", helvetica, arial, sans-serif;
+font-size: 16px;
+font-weight: 400;
+text-rendering: optimizeLegibility;
+}
+
+div.table-title {
+ display: block;
+margin: auto;
+max-width: 600px;
+padding:5px;
+width: 100%;
+}
+
+.table-title h3 {
+ color: #fafafa;
+ font-size: 30px;
+ font-weight: 400;
+ font-style:normal;
+ font-family: "Roboto", helvetica, arial, sans-serif;
+ text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+ text-transform:uppercase;
+}
+
+
+/*** Table Styles **/
+
+.table-fill {
+background: white;
+border-radius:3px;
+border-collapse: collapse;
+height: 320px;
+margin: auto;
+max-width: 600px;
+padding:5px;
+width: 100%;
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+animation: float 5s infinite;
+}
+p {
+ color: #fafafa;
+ font-size: 30px;
+ font-weight: 400;
+ font-style:normal;
+ font-family: "Roboto", helvetica, arial, sans-serif;
+ text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+ text-transform:uppercase;
+}
+th {
+color:#D5DDE5;;
+background:#1b1e24;
+border-bottom:4px solid #9ea7af;
+border-right: 1px solid #343a45;
+font-size:23px;
+font-weight: 100;
+padding:24px;
+text-align:left;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+vertical-align:middle;
+}
+
+th:first-child {
+border-top-left-radius:3px;
+}
+
+th:last-child {
+border-top-right-radius:3px;
+border-right:none;
+}
+
+tr {
+border-top: 1px solid #C1C3D1;
+border-bottom-: 1px solid #C1C3D1;
+color:#666B85;
+font-size:16px;
+font-weight:normal;
+text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+}
+
+tr:hover td {
+background:#4E5066;
+color:#FFFFFF;
+border-top: 1px solid #22262e;
+}
+
+tr:first-child {
+border-top:none;
+}
+
+tr:last-child {
+border-bottom:none;
+}
+
+tr:nth-child(odd) td {
+background:#EBEBEB;
+}
+
+tr:nth-child(odd):hover td {
+background:#4E5066;
+}
+
+tr:last-child td:first-child {
+border-bottom-left-radius:3px;
+}
+
+tr:last-child td:last-child {
+border-bottom-right-radius:3px;
+}
+
+td {
+background:#FFFFFF;
+padding:20px;
+text-align:left;
+vertical-align:middle;
+font-weight:300;
+font-size:18px;
+text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+border-right: 1px solid #C1C3D1;
+}
+
+td:last-child {
+border-right: 0px;
+}
+
+th.text-left {
+text-align: left;
+}
+
+th.text-center {
+text-align: center;
+}
+
+th.text-right {
+text-align: right;
+}
+
+td.text-left {
+text-align: left;
+}
+
+td.text-center {
+text-align: center;
+}
+
+td.text-right {
+text-align: right;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a id="January">January</a></li>
+      <li><a id="February">February</a></li>
+      <li class="active"><a id="March">March</a></li>
+      <li><a id="April">April</a></li>
+      <li><a id="May">May</a></li>
+      <li><a id="June">June</a></li>
+      <li><a id="July">July</a></li>
+      <li><a id="August">August</a></li>
+      <li><a id="September">September</a></li>
+      <li><a id="October">October</a></li>
+      <li><a id="November">November</a></li>
+      <li><a id="December">December</a></li>
+
+
+    </ul>
+
+  </div>
+</nav>
+
+    <div class="table-title" >
+      <h3>Finance Table</h3>
+    </div>
+    <div class="login-page">
+      <!-- <p>Login</p> -->
+  <div>
+  <div class="table" id="div1">
+    <table class="table-fill" id="tableJanuary">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div>
+  <div class="table" id="div2" style="display:none;">
+    <table class="table-fill" id="tableFebruary">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div>
+
+  <div class="table" id="div3" style="display:none;">
+    <div class="table-title">
+      <p id="March_amt">The total amount earned is </p>
+    </div>
+    <div class="table-title">
+      <p id="March_spent">The total amount spent is </p>
+    </div>
+    <table class="table-fill" id="tableMarch">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div>
+  <div class="table" id="div4" style="display:none;">
+    <div class="table-title">
+      <p id="April_amt">The total amount earned is </p>
+    </div>
+    <div class="table-title">
+      <p id="April_spent">The total amount spent is </p>
+    </div>
+    <table class="table-fill" id="tableApril">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div><div class="table" id="div5" style="display:none;">
+    <table class="table-fill" id="tableMay">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div>
+  <div class="table" id="div6" style="display:none;">
+    <table class="table-fill" id="tableJune">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+  </div>
+  <div class="table" id="div8" style="display:none;">
+    <div class="table-title">
+      <p id="total_amt">The total amount earned is </p>
+    </div>
+    <div class="table-title">
+      <p id="total_spent">The total amount spent is </p>
+    </div>
+    <table class="table-fill" id="tableAugust">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+    <div class="table" id="div7" style="display:none;">
+      <table class="table-fill" id="tableJuly">
+        <th>Amount</th>
+        <th>Bill URL</th>
+        <th>Paid For</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Uploaded Date</th>
+      </table>
+  </div>
+  <div class="table" id="div9" style="display:none;">
+    <table class="table-fill" id="tableSeptember">
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+</div>
+</div><div class="table" id="div10" style="display:none;">
+  <table class="table-fill" id="tableOctober">
+    <th>Amount</th>
+    <th>Bill URL</th>
+    <th>Paid For</th>
+    <th>Date</th>
+    <th>Reason</th>
+    <th>Uploaded Date</th>
+  </table>
+</div>
+  <div class="table" id="div11" style="display:none;">
+    <table class="table-fill" id="tableNovember" >
+      <th>Amount</th>
+      <th>Bill URL</th>
+      <th>Paid For</th>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Uploaded Date</th>
+    </table>
+</div>
+<div class="table" id="div12" style="display:none;">
+  <table class="table-fill" id="tableDecember">
+    <th>Amount</th>
+    <th>Bill URL</th>
+    <th>Paid For</th>
+    <th>Date</th>
+    <th>Reason</th>
+    <th>Uploaded Date</th>
+  </table>
+</div>
+</div>
+  </body>
+</html>
